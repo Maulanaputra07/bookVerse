@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">BookVerse</string>
+    <string name="descLogo">BookVerseLogo</string>
+    <string name="book">Book</string>
+    <string name="verse">Verse</string>
+    <string name="Login">Login</string>
+    <string name="SignIn">Sign in</string>
+    <string name="textLogin">Belum mempunyai akun?</string>
+    <string name="textSignIn">Sudah mempunyai akun?</string>
+    <string name="Username">Username</string>
+    <string name="Password">Password</string>
+    <string name="nama">Nama</string>
+    <string name="Email">Email</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="greetings">Selamat malam,</string>
+    <string name="nameUser">Maulana</string>
+    <string name="textHome">Temukan buku terbaik anda sekarang</string>
+    <string name="home">Home</string>
+    <string name="textNotif">Wow, ada buku baru nih!!</string>
+    <string name="mainNotif">Buku mengenai pembelajaran Jepang yang mudah dipahami</string>
+    <string name="linkNotif">Lihat buku</string>
+    <string name="rec">Rekomendasi</string>
+    <string name="New">Terbaru</string>
+    <string name="linkLihatsemua">Lihat semua</string>
+    <string name="bookDesc">book</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="genre">Genre</string>
+    <string name="search">Cari judul buku</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="borrow">Buku yang dipinjam</string>
+    <string name="history">Riwayat peminjaman</string>
+
+</resources>

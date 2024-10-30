@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.BookVerse" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@android:color/white</item> <!-- Atur warna primer -->
+        <item name="colorPrimaryVariant">@android:color/white</item> <!-- Variasi warna primer -->
+        <item name="colorOnPrimary">@android:color/black</item> <!-- Warna teks di atas warna primer -->
+        <item name="color">@android:color/white</item> <!-- Warna latar belakang -->
+        <item name="colorSurface">@android:color/white</item> <!-- Warna permukaan -->
+        <item name="android:statusBarColor">@android:color/white</item> <!-- Warna status bar -->
+        <item name="android:windowLightStatusBar">true</item> <!-- Mengatur status bar agar elemen menjadi gelap -->
+    </style>
+
+    <style name="Theme.BookVerse" parent="Base.Theme.BookVerse" />
+</resources>

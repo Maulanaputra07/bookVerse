@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="15dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/greetingUser"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/greetings"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nameUser"
+                android:layout_marginStart="5dp"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textHome"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/greetingUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textHome"
+            android:layout_marginStart="5dp"
+            android:textSize="15sp"
+            />
+
+        <LinearLayout
+            android:id="@+id/notifBook"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/textHome"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:background="@drawable/notif_card"
+            android:backgroundTint="@color/tosca"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/textNotifbook"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/text1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/textNotif"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/text2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mainNotif"
+                    android:textSize="18sp"
+                    />
+
+                <TextView
+                    android:id="@+id/linkNotif"
+                    app:layout_constraintTop_toBottomOf="@id/text2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="@string/linkNotif"
+
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/imgNotifBook"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/teka_teki_rumah_aneh"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linkRec"
+            app:layout_constraintTop_toBottomOf="@id/notifBook"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:text="@string/rec"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" /> <!-- Pengisi ruang -->
+
+        <TextView
+            android:id="@+id/seeAllRec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/linkLihatsemua"
+            android:alpha="0.5"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            />
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/listBook1"
+            app:layout_constraintTop_toBottomOf="@+id/linkRec"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/linearBookRec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:id="@+id/linkNew"
+            app:layout_constraintTop_toBottomOf="@id/listBook1"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:text="@string/New"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" /> <!-- Pengisi ruang -->
+
+            <TextView
+                android:id="@+id/seeAllNew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/linkLihatsemua"
+                android:alpha="0.5"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                />
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/listBook2"
+            app:layout_constraintTop_toBottomOf="@+id/linkNew"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/linearBookNew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="6dp">
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

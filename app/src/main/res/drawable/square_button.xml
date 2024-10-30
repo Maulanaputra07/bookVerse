@@ -1,0 +1,9 @@
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <corners android:radius="12dp" />
+            <solid android:color="@android:color/white" /> <!-- Warna netral untuk memungkinkan tinting -->
+        </shape>
+    </item>
+</layer-list>
