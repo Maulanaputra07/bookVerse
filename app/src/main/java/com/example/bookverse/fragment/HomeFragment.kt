@@ -19,6 +19,7 @@ import com.example.bookverse.DetailBookActivity
 import com.example.bookverse.R
 import com.example.bookverse.databinding.FragmentHomeBinding
 import java.time.LocalTime
+import java.util.Calendar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,7 +42,7 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val sharedPreferences = activity?.getSharedPreferences("user_prefs", AppCompatActivity.MODE_PRIVATE)
+        val sharedPreferences = activity?.getSharedPreferences("userSession", AppCompatActivity.MODE_PRIVATE)
         val username = sharedPreferences?.getString("username", "Guest")
         binding.textUsername.text = username
 
@@ -136,7 +137,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun GreetingTime(): String {
-        val currentHour = LocalTime.now().hour
+
+        //min sdk 26
+//        val currentHour = LocalTime.now().hour
+
+
+        //min sdk 24
+        val calendar = Calendar.getInstance()
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = calendar.get(Calendar.MINUTE)
 
         return when (currentHour){
             in 0..11 -> "Selamat Pagi,"
@@ -144,6 +153,8 @@ class HomeFragment : Fragment() {
             in 16..18 -> "Selamat Sore,"
             else -> "Selamat Malam,"
         }
+
+
     }
 
 

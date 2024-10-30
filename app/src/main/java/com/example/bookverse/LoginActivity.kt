@@ -41,8 +41,6 @@ class LoginActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(this, "harap isi semua data", Toast.LENGTH_SHORT).show()
             }
-
-
         }
     }
 
@@ -54,9 +52,7 @@ class LoginActivity : AppCompatActivity() {
                         val userData = userSnapshot.getValue(UserData::class.java)
 
                         if(userData != null && userData.password == password){
-                            saveLoginStatus(userData.username.toString())
-//                            val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
-//                            sharedPreferences.edit().putString("username", userData.username).apply()
+                            saveLoginStatus(userData.name.toString())
 
 
                             Toast.makeText(this@LoginActivity, "Login berhasil", Toast.LENGTH_SHORT).show()
@@ -78,9 +74,9 @@ class LoginActivity : AppCompatActivity() {
     private fun saveLoginStatus(username: String) {
         val sharedPref = getSharedPreferences("userSession", MODE_PRIVATE)
         val editor = sharedPref.edit()
-        editor.putString("username", username) // Simpan username
-        editor.putBoolean("isLoggedIn", true) // Tandai user sebagai sudah login
-        editor.apply() // Simpan perubahan
+        editor.putString("username", username)
+        editor.putBoolean("isLoggedIn", true)
+        editor.apply()
     }
 
     private fun checkLoginStatus() {
