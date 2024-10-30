@@ -82,7 +82,7 @@
             app:hintEnabled="false"
             app:layout_constraintTop_toBottomOf="@+id/labelPassword">
             <EditText
-                android:id="@+id/etNama"
+                android:id="@+id/etName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/nama"
@@ -103,12 +103,12 @@
             app:hintEnabled="false"
             app:layout_constraintTop_toBottomOf="@+id/labelPassword">
             <EditText
-                android:id="@+id/etPassword"
+                android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/Password"
+                android:hint="@string/Email"
                 android:autofillHints="password"
-                android:inputType="textPassword"
+                android:inputType="textEmailAddress"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:background="@drawable/rounded_edittext"
@@ -123,12 +123,12 @@
             app:hintEnabled="false"
             app:layout_constraintTop_toBottomOf="@+id/labelPassword">
             <EditText
-                android:id="@+id/etEmail"
+                android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/Email"
+                android:hint="@string/Password"
                 android:autofillHints="emailAddress"
-                android:inputType="textEmailAddress"
+                android:inputType="textPassword"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:background="@drawable/rounded_edittext"
@@ -185,7 +185,7 @@
     <!--            />-->
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnSignup"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutInput"

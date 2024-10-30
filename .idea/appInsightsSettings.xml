@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.bookverse" />
+                  <option name="mobileSdkAppId" value="1:933532760181:android:2ddfe0a6c1cbc460c1603c" />
+                  <option name="projectId" value="bookverseproject" />
+                  <option name="projectNumber" value="933532760181" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
