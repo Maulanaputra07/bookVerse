@@ -11,12 +11,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ActivityChooserView.InnerLayout
 import androidx.cardview.widget.CardView
 import androidx.core.view.marginTop
 import com.example.bookverse.DetailBookActivity
 import com.example.bookverse.R
 import com.example.bookverse.databinding.FragmentHomeBinding
+import java.time.LocalTime
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,6 +40,12 @@ class HomeFragment : Fragment() {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        val sharedPreferences = activity?.getSharedPreferences("user_prefs", AppCompatActivity.MODE_PRIVATE)
+        val username = sharedPreferences?.getString("username", "Guest")
+        binding.textUsername.text = username
+
+        binding.greetingTime.text = GreetingTime()
 
         // Data contoh
         val idBooks = arrayOf(1, 2, 3, 4, 5)
@@ -125,6 +133,17 @@ class HomeFragment : Fragment() {
         cardView.addView(innerLayout)
 
         return cardView
+    }
+
+    private fun GreetingTime(): String {
+        val currentHour = LocalTime.now().hour
+
+        return when (currentHour){
+            in 0..11 -> "Selamat Pagi,"
+            in 12..15-> "Selamat Siang,"
+            in 16..18 -> "Selamat Sore,"
+            else -> "Selamat Malam,"
+        }
     }
 
 

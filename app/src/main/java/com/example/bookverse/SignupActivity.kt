@@ -52,7 +52,8 @@ class SignupActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(!snapshot.exists()){
                     val id = databaseReference.push().key ?: return
-                    val userData = UserData(id, username, name, email, password)
+                    val role = ""
+                    val userData = UserData(id, username, name, email, password, role)
                     databaseReference.child(id).setValue(userData).apply {
                         Toast.makeText(this@SignupActivity, "Berhasil melakukan signup", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this@SignupActivity, LoginActivity::class.java))

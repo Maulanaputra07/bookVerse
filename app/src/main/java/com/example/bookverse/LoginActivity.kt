@@ -23,6 +23,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+        firebaseDatabase = FirebaseDatabase.getInstance()
+        databaseReference = firebaseDatabase.reference.child("users")
 
         binding.link.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
@@ -33,8 +35,7 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.etPassword.text.toString()
 
             if(username.isNotEmpty() && password.isNotEmpty()){
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                Login(username, password)
             }else{
                 Toast.makeText(this, "harap isi semua data", Toast.LENGTH_SHORT).show()
             }
@@ -49,9 +50,14 @@ class LoginActivity : AppCompatActivity() {
                 if(snapshot.exists()){
                     for(userSnapshot in snapshot.children){
                         val userData = userSnapshot.getValue(UserData::class.java)
+
                         if(userData != null && userData.password == password){
+                            val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
+                            sharedPreferences.edit().putString("username", userData.username).apply()
+
+
                             Toast.makeText(this@LoginActivity, "Login berhasil", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java).putExtra("username", username))
                             finish()
                             return
                         }
