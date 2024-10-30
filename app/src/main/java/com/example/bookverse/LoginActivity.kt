@@ -2,10 +2,7 @@ package com.example.bookverse
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.bookverse.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -19,7 +16,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.link.setOnClickListener {
-            startActivity(Intent(this, SigninActivity::class.java))
+            startActivity(Intent(this, SignupActivity::class.java))
         }
 
         binding.btnLogin.setOnClickListener {
