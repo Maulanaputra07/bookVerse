@@ -26,6 +26,8 @@ class LoginActivity : AppCompatActivity() {
         firebaseDatabase = FirebaseDatabase.getInstance()
         databaseReference = firebaseDatabase.reference.child("users")
 
+        checkLoginStatus()
+
         binding.link.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
         }
@@ -52,8 +54,9 @@ class LoginActivity : AppCompatActivity() {
                         val userData = userSnapshot.getValue(UserData::class.java)
 
                         if(userData != null && userData.password == password){
-                            val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
-                            sharedPreferences.edit().putString("username", userData.username).apply()
+                            saveLoginStatus(userData.username.toString())
+//                            val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
+//                            sharedPreferences.edit().putString("username", userData.username).apply()
 
 
                             Toast.makeText(this@LoginActivity, "Login berhasil", Toast.LENGTH_SHORT).show()
@@ -70,6 +73,24 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity, "database error: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun saveLoginStatus(username: String) {
+        val sharedPref = getSharedPreferences("userSession", MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putString("username", username) // Simpan username
+        editor.putBoolean("isLoggedIn", true) // Tandai user sebagai sudah login
+        editor.apply() // Simpan perubahan
+    }
+
+    private fun checkLoginStatus() {
+        val sharedPref = getSharedPreferences("userSession", MODE_PRIVATE)
+        val isLoggedIn = sharedPref.getBoolean("isLoggedIn", false)
+
+        if (isLoggedIn) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 
 }
