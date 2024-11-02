@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import com.example.bookverse.databinding.ActivityMainBinding
 import com.example.bookverse.fragment.BooksFragment
 import com.example.bookverse.fragment.HomeFragment
+import com.example.bookverse.fragment.ProfileFragment
 import com.example.bookverse.fragment.SavedFragment
 
 class MainActivity : AppCompatActivity() {
@@ -33,9 +34,13 @@ class MainActivity : AppCompatActivity() {
             gotoFragment(HomeFragment())
         }
 
-        binding.btnSaved.setOnClickListener {
-            gotoFragment(SavedFragment())
+        binding.btnProfile.setOnClickListener {
+            gotoFragment(ProfileFragment())
         }
+
+//        binding.btnSaved.setOnClickListener {
+//            gotoFragment(SavedFragment())
+//        }
 
     }
 

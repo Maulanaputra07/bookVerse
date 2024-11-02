@@ -29,5 +29,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="borrow">Buku yang dipinjam</string>
     <string name="history">Riwayat peminjaman</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="helloUsername">Hello username</string>
+    <string name="UserName">Hello name</string>
+    <string name="UserEmail">user@gmail.com</string>
+    <string name="currentBook">Dipinjam</string>
+    <string name="historyBook">Telah dipinjam</string>
+    <string name="wishlistBook">Ingin dipinjam</string>
+    <string name="kosong">0</string>
+    <string name="logout">Logout</string>
 
 </resources>

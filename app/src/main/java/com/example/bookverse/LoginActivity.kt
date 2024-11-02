@@ -54,7 +54,6 @@ class LoginActivity : AppCompatActivity() {
                         if(userData != null && userData.password == password){
                             saveLoginStatus(userData.name.toString())
 
-
                             Toast.makeText(this@LoginActivity, "Login berhasil", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java).putExtra("username", username))
                             finish()

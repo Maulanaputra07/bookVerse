@@ -3,6 +3,7 @@ package com.example.bookverse.fragment
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.view.Gravity
@@ -13,10 +14,16 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.view.marginTop
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.bookverse.R
 import com.example.bookverse.databinding.FragmentBooksBinding
 import com.google.android.gms.auth.api.signin.internal.Storage
@@ -55,6 +62,8 @@ class BooksFragment : Fragment() {
 
 
         val view = binding.root
+        binding.progressBar.visibility = View.VISIBLE
+
         val genres = arrayOf("fantasi", "horror", "Aksi", "Komedi", "Romance", "Misteri", "tes", "1", "2")
         val images = arrayOf(R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi)
 
@@ -64,6 +73,12 @@ class BooksFragment : Fragment() {
             imageRef.downloadUrl.addOnSuccessListener {
                 uri ->
                 binding.linearGenre.addView(CreateCardView(genre, uri.toString()))
+            }.addOnCompleteListener {
+                if(it.isComplete){
+                    binding.progressBar.visibility = View.GONE
+                }
+            }.addOnFailureListener {
+                binding.progressBar.visibility = View.GONE
             }
         }
 
@@ -85,10 +100,19 @@ class BooksFragment : Fragment() {
         val frameLayout = FrameLayout(requireContext()).apply {
             layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT
+                FrameLayout.LayoutParams.MATCH_PARENT
             )
         }
 
+        val progressBar = ProgressBar(requireContext()).apply {
+            layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                gravity = Gravity.CENTER
+            }
+            visibility = View.VISIBLE
+        }
 
 
         val imageView = ImageView(requireContext()).apply {
@@ -103,6 +127,29 @@ class BooksFragment : Fragment() {
                 .load(imageUrl)
 //                .placeholder(R.drawabl)
 //                .error()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+                })
                 .into(this)
         }
 
@@ -124,6 +171,7 @@ class BooksFragment : Fragment() {
 
         frameLayout.addView(imageView)
         frameLayout.addView(textView)
+//        frameLayout.addView(progressBar)
         cardView.addView(frameLayout)
 
         return cardView
