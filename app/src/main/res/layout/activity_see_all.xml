@@ -3,34 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:padding="15dp"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".user.DetailBookActivity">
+    android:background="@color/white"
+    android:padding="15dp"
+    tools:context=".user.SeeAllActivity">
 
     <TextView
-        android:id="@+id/idBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        />
-
-    <TextView
-        android:id="@+id/titleBook"
+        android:id="@+id/listName"
+        android:textSize="30sp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/idBook"
+        android:layout_height="wrap_content"/>
+
+    <ScrollView
+        android:id="@+id/layoutSeeAll"
+        app:layout_constraintTop_toBottomOf="@+id/listName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

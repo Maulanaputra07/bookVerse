@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.bookverse.admin.MainActivityAdmin
 import com.example.bookverse.databinding.ActivityLoginBinding
 import com.example.bookverse.model.UserData
+import com.example.bookverse.user.MainActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -52,11 +54,11 @@ class LoginActivity : AppCompatActivity() {
                         val userData = userSnapshot.getValue(UserData::class.java)
 
                         if(userData != null && userData.password == password){
-                            saveLoginStatus(userData.name.toString())
-
-                            Toast.makeText(this@LoginActivity, "Login berhasil", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java).putExtra("username", username))
-                            finish()
+                            saveLoginStatus(userData.username.toString(), userData.role.toString(), userData.name.toString(), userData.email.toString())
+                            checkLoginStatus()
+//                            Toast.makeText(this@LoginActivity, "Login berhasil", Toast.LENGTH_SHORT).show()
+//                            startActivity(Intent(this@LoginActivity, MainActivity::class.java).putExtra("username", username))
+//                            finish()
                             return
                         }
                     }
@@ -70,10 +72,13 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    private fun saveLoginStatus(username: String) {
+    private fun saveLoginStatus(username: String, role: String, name: String, email:String) {
         val sharedPref = getSharedPreferences("userSession", MODE_PRIVATE)
         val editor = sharedPref.edit()
         editor.putString("username", username)
+        editor.putString("role", role)
+        editor.putString("name", name)
+        editor.putString("email", email)
         editor.putBoolean("isLoggedIn", true)
         editor.apply()
     }
@@ -81,9 +86,15 @@ class LoginActivity : AppCompatActivity() {
     private fun checkLoginStatus() {
         val sharedPref = getSharedPreferences("userSession", MODE_PRIVATE)
         val isLoggedIn = sharedPref.getBoolean("isLoggedIn", false)
+        var role = sharedPref.getString("role", "")
 
-        if (isLoggedIn) {
+        if (isLoggedIn && role == "member") {
+            Toast.makeText(this@LoginActivity, "Login berhasil", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }else if(isLoggedIn && role == "admin"){
+            Toast.makeText(this@LoginActivity, "Login berhasil", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, MainActivityAdmin::class.java))
             finish()
         }
     }

@@ -1,10 +1,7 @@
-package com.example.bookverse
+package com.example.bookverse.user
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.bookverse.databinding.ActivityDetailBookBinding
 
 class DetailBookActivity : AppCompatActivity() {

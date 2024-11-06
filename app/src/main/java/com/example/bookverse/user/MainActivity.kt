@@ -1,17 +1,14 @@
-package com.example.bookverse
+package com.example.bookverse.user
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.bookverse.R
 import com.example.bookverse.databinding.ActivityMainBinding
 import com.example.bookverse.fragment.BooksFragment
 import com.example.bookverse.fragment.HomeFragment
 import com.example.bookverse.fragment.ProfileFragment
-import com.example.bookverse.fragment.SavedFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

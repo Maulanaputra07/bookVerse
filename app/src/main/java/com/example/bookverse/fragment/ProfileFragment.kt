@@ -40,8 +40,13 @@ class ProfileFragment : Fragment() {
 
         val sharedPreferences = activity?.getSharedPreferences("userSession", AppCompatActivity.MODE_PRIVATE)
         val username = sharedPreferences?.getString("username", "Guest")
+        val name = sharedPreferences?.getString("name", "")
+        val email = sharedPreferences?.getString("email", "")
 
         binding.txtUsername.text = username
+        binding.txtName.text = name
+        binding.txtEmail.text = email
+
         binding.btnLogout.setOnClickListener {
             logout()
         }
@@ -56,9 +61,6 @@ class ProfileFragment : Fragment() {
         val intent = Intent(requireContext(), LoginActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
-
-    //        startActivity(Intent(this@ProfileFragment, LoginActivity::class.java))
-    //        finish()
     }
 
     private fun clearLoginStatus(){

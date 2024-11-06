@@ -1,10 +1,8 @@
 package com.example.bookverse.fragment
 
-import android.graphics.BitmapFactory
+import android.content.Intent
 import android.graphics.Typeface
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.view.Gravity
 import androidx.fragment.app.Fragment
@@ -17,7 +15,6 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.view.marginTop
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -25,8 +22,8 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.bookverse.R
+import com.example.bookverse.user.SeeAllActivity
 import com.example.bookverse.databinding.FragmentBooksBinding
-import com.google.android.gms.auth.api.signin.internal.Storage
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -72,7 +69,16 @@ class BooksFragment : Fragment() {
 
             imageRef.downloadUrl.addOnSuccessListener {
                 uri ->
-                binding.linearGenre.addView(CreateCardView(genre, uri.toString()))
+                val genresList  = CreateCardView(genre, uri.toString())
+                binding.linearGenre.addView(genresList)
+
+                genresList.setOnClickListener {
+                    val intent = Intent(requireContext(), SeeAllActivity::class.java).apply {
+                        putExtra("listName", genre)
+                    }
+                    startActivity(intent)
+                }
+
             }.addOnCompleteListener {
                 if(it.isComplete){
                     binding.progressBar.visibility = View.GONE

@@ -38,5 +38,7 @@
     <string name="wishlistBook">Ingin dipinjam</string>
     <string name="kosong">0</string>
     <string name="logout">Logout</string>
+    <string name="buku">Buku</string>
+    <string name="user">User</string>
 
 </resources>

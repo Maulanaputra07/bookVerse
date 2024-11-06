@@ -1,9 +1,7 @@
 package com.example.bookverse.fragment
 
 import android.content.Intent
-import android.icu.text.CaseMap.Title
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +10,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.ActivityChooserView.InnerLayout
 import androidx.cardview.widget.CardView
-import androidx.core.view.marginTop
-import com.example.bookverse.DetailBookActivity
+import com.example.bookverse.user.DetailBookActivity
 import com.example.bookverse.R
+import com.example.bookverse.user.SeeAllActivity
 import com.example.bookverse.databinding.FragmentHomeBinding
-import java.time.LocalTime
 import java.util.Calendar
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,6 +43,28 @@ class HomeFragment : Fragment() {
         binding.textUsername.text = username
 
         binding.greetingTime.text = GreetingTime()
+
+        binding.seeAllRec.setOnClickListener {
+            val intent = Intent(requireContext(), SeeAllActivity::class.java).apply {
+                putExtra("listName", "Rekomendasi")
+            }
+            startActivity(intent)
+        }
+
+        binding.seeAllNew.setOnClickListener {
+            val intent = Intent(requireContext(), SeeAllActivity::class.java).apply {
+                putExtra("listName", "Terbaru")
+            }
+            startActivity(intent)
+        }
+
+        binding.linkNotif.setOnClickListener {
+            val intent = Intent(requireContext(), DetailBookActivity::class.java).apply {
+                putExtra("bookId", 12)
+                putExtra("title", "Buku Baru")
+            }
+            startActivity(intent)
+        }
 
         // Data contoh
         val idBooks = arrayOf(1, 2, 3, 4, 5)
