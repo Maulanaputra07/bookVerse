@@ -6,4 +6,9 @@
     <color name="lightPurle">#D8BFD8</color>
     <color name="red">#AF1740</color>
     <color name="lightYellow">#FFFACD</color>
+    <color name="green">#A0D683</color>
+    <color name="lightGreey">#F6F5F2</color>
+    <color name="yellow">#EEB20D</color>
+
+<!--    F9F6F7-->
 </resources>

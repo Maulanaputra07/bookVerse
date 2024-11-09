@@ -23,7 +23,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.bookverse.R
 import com.example.bookverse.user.SeeAllActivity
-import com.example.bookverse.databinding.FragmentBooksBinding
+import com.example.bookverse.databinding.FragmentGenresBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -36,11 +36,11 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [BooksFragment.newInstance] factory method to
+ * Use the [GenresFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class BooksFragment : Fragment() {
-    private lateinit var binding: FragmentBooksBinding
+class GenresFragment : Fragment() {
+    private lateinit var binding: FragmentGenresBinding
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var firebaseStorage: FirebaseStorage
     private lateinit var databaseReference: DatabaseReference
@@ -51,7 +51,7 @@ class BooksFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentBooksBinding.inflate(inflater, container, false)
+        binding = FragmentGenresBinding.inflate(inflater, container, false)
         firebaseDatabase = FirebaseDatabase.getInstance()
         firebaseStorage = FirebaseStorage.getInstance()
         databaseReference = firebaseDatabase.reference.child("genre")
@@ -129,7 +129,7 @@ class BooksFragment : Fragment() {
             scaleType = ImageView.ScaleType.FIT_XY
             contentDescription = genre
 
-            Glide.with(this@BooksFragment)
+            Glide.with(this@GenresFragment)
                 .load(imageUrl)
 //                .placeholder(R.drawabl)
 //                .error()
@@ -195,7 +195,7 @@ class BooksFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            BooksFragment().apply {
+            GenresFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

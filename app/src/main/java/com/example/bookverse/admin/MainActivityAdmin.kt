@@ -23,6 +23,10 @@ class MainActivityAdmin : AppCompatActivity() {
         binding.btnLogout.setOnClickListener {
             logout()
         }
+
+        binding.layoutBuku.setOnClickListener {
+            startActivity(Intent(this, ManageBookActivity::class.java))
+        }
     }
 
     private fun logout(){

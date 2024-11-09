@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.bookverse.R
 import com.example.bookverse.databinding.ActivityMainBinding
-import com.example.bookverse.fragment.BooksFragment
+import com.example.bookverse.fragment.GenresFragment
 import com.example.bookverse.fragment.HomeFragment
 import com.example.bookverse.fragment.ProfileFragment
 
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         gotoFragment(HomeFragment())
 
         binding.btnBook.setOnClickListener {
-            gotoFragment(BooksFragment())
+            gotoFragment(GenresFragment())
         }
 
         binding.btnHome.setOnClickListener {

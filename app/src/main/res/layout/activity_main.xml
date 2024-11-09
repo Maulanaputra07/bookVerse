@@ -19,13 +19,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/layoutButtons"/>
 
-    <!--    <Button-->
-    <!--        android:id="@+id/btnFrag2"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginBottom="76dp"-->
-    <!--        android:backgroundTint="@color/green"/>-->
-
     <LinearLayout
         android:id="@+id/layoutButtons"
         app:layout_constraintStart_toStartOf="parent"

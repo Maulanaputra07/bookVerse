@@ -18,7 +18,7 @@ class DetailBookActivity : AppCompatActivity() {
         val title = intent.getStringExtra("title") // Mengambil judul buku
 
         // Mengatur nilai ke TextView
-        binding.idBook.text = bookId.toString() // Mengubah ID menjadi String
+//        binding.idBook.text = bookId.toString()
         binding.titleBook.text = title // Langsung mengatur judul
 
     }

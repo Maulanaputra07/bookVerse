@@ -7,5 +7,5 @@ data class Books(
     val genre :String ?= null,
     val cover :String ?= null,
     val penulis :String ?= null,
-    val tahun_terbi :Int ?= null
+    val tahun_terbit :Int ?= null
 )
