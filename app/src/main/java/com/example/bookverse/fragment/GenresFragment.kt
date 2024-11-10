@@ -61,8 +61,10 @@ class GenresFragment : Fragment() {
         val view = binding.root
         binding.progressBar.visibility = View.VISIBLE
 
+        binding.etSearch
+
         val genres = arrayOf("fantasi", "horror", "Aksi", "Komedi", "Romance", "Misteri", "tes", "1", "2")
-        val images = arrayOf(R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi)
+//        val images = arrayOf(R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi, R.drawable.fantasi)
 
         for(genre in genres){
             val imageRef = storageReference.child("$genre.png")

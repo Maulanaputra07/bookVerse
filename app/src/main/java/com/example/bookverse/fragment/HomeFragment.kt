@@ -1,5 +1,6 @@
 package com.example.bookverse.fragment
 
+import Books
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +19,6 @@ import com.example.bookverse.user.DetailBookActivity
 import com.example.bookverse.R
 import com.example.bookverse.user.SeeAllActivity
 import com.example.bookverse.databinding.FragmentHomeBinding
-import com.example.bookverse.model.Books
 import com.google.firebase.FirebaseError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
         databaseReference = FirebaseDatabase.getInstance().getReference("books")
 
         loadbooks()
-//        Log.d("listBukuu", bookList.toString())
+        loadLatesBook()
 
         val view = binding.root
 
@@ -62,66 +62,72 @@ class HomeFragment : Fragment() {
         binding.greetingTime.text = GreetingTime()
 
         binding.seeAllRec.setOnClickListener {
+
             val intent = Intent(requireContext(), SeeAllActivity::class.java).apply {
                 putExtra("listName", "Rekomendasi")
+                putExtra("books", ArrayList(bookList))
+
             }
             startActivity(intent)
         }
 
         binding.seeAllNew.setOnClickListener {
+            val currentTime = System.currentTimeMillis()
+            val oneWeekAgo = currentTime - (7 * 24 * 60 * 60 * 1000)
+
+            val recentBooks = ArrayList(bookList.filter { book ->
+                book.createDate != null && book.createDate >= oneWeekAgo
+            })
+
             val intent = Intent(requireContext(), SeeAllActivity::class.java).apply {
                 putExtra("listName", "Terbaru")
+                putExtra("books", recentBooks)
             }
             startActivity(intent)
         }
+
+        return view
+    }
+
+    private fun loadLatesBook(){
+        databaseReference.orderByChild("createDate").limitToLast(1)
+            .addListenerForSingleValueEvent(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                        val latesBook = snapshot.children.last().getValue(Books::class.java)
+                        if(latesBook != null){
+                            displayNotif(latesBook)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
+    }
+
+    private fun displayNotif(book: Books){
+        book.cover.let {
+            Glide.with(this)
+                .load(it)
+                .into(binding.imgNotifBook)
+        }
+
+        binding.text2.text = book.sinopsis
 
         binding.linkNotif.setOnClickListener {
             val intent = Intent(requireContext(), DetailBookActivity::class.java).apply {
-                putExtra("bookId", 12)
-                putExtra("title", "Buku Baru")
+                putExtra("bookId", book.id)
+                putExtra("title", book.judul)
+                putExtra("penulis", book.penulis)
+                putExtra("tahunTerbit", book.tahun_terbit.toString())
+                putExtra("cover", book.cover)
+                putExtra("sinopsis", book.sinopsis)
+                putExtra("genre", book.genre)
             }
             startActivity(intent)
         }
-
-        // Data contoh
-        val idBooks = arrayOf(1, 2, 3, 4, 5)
-        val titles = arrayOf("Title 1", "Title 2", "Title 3", "Title 4", "Title 5")
-        val images = arrayOf(
-            R.drawable.teka_teki_rumah_aneh,
-            R.drawable.teka_teki_rumah_aneh,
-            R.drawable.teka_teki_rumah_aneh,
-            R.drawable.teka_teki_rumah_aneh,
-            R.drawable.teka_teki_rumah_aneh
-        )
-
-
-
-        // Looping untuk menambahkan card
-//        for (i in titles.indices) {
-//            val cardViewRec = CreateCardView(titles[i], images[i], idBooks[i])
-//            val cardViewNew = CreateCardView(titles[i], images[i], idBooks[i])
-//            binding.linearBookRec.addView(cardViewRec)
-//            binding.linearBookNew.addView(cardViewNew)
-//
-//            cardViewRec.setOnClickListener {
-//                val intent = Intent(requireContext(), DetailBookActivity::class.java).apply {
-//                    putExtra("bookId", idBooks[i])
-//                    putExtra("title", titles[i])
-//                }
-//                startActivity(intent)
-//            }
-//
-//            cardViewNew.setOnClickListener {
-//                val intent = Intent(requireContext(), DetailBookActivity::class.java).apply {
-//                    putExtra("bookId", idBooks[i])
-//                }
-//                startActivity(intent)
-//            }
-//
-//
-//        }
-
-        return view
     }
 
     private fun loadbooks(){
@@ -148,13 +154,21 @@ class HomeFragment : Fragment() {
         binding.linearBookNew.removeAllViews()
         binding.linearBookRec.removeAllViews()
 
-        for(book in bookList){
-            Log.d("bukuu", book.judul.toString())
-            val cardViewRec = CreateCardView(book)
-            val cardViewNew = CreateCardView(book)
+        val currentTime = System.currentTimeMillis()
+        val oneWeekAgo = currentTime - (7 * 24 * 60 * 60 * 1000)
 
+        val recentBooks = bookList.filter { book ->
+            book.createDate != null && book.createDate >= oneWeekAgo
+        }
+
+        for(book in recentBooks){
+            val cardView = CreateCardView(book)
+            binding.linearBookNew.addView(cardView)
+        }
+
+        for(book in bookList){
+            val cardViewRec = CreateCardView(book)
             binding.linearBookRec.addView(cardViewRec)
-            binding.linearBookNew.addView(cardViewNew)
         }
     }
 
@@ -222,12 +236,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun GreetingTime(): String {
-
-        //min sdk 26
-//        val currentHour = LocalTime.now().hour
-
-
-        //min sdk 24
         val calendar = Calendar.getInstance()
         val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
         val currentMinute = calendar.get(Calendar.MINUTE)

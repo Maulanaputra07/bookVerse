@@ -1,5 +1,6 @@
 package com.example.bookverse.admin
 
+import Books
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.bumptech.glide.Glide
 import com.example.bookverse.R
 import com.example.bookverse.databinding.ActivityManageBookBinding
-import com.example.bookverse.model.Books
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -131,8 +131,6 @@ class ManageBookActivity : AppCompatActivity() {
                     if(position != RecyclerView.NO_POSITION){
                         val bookId = data.id
                         deleteBooksFromDatabase(bookId?: "")
-
-
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.example.bookverse.admin
 
+import Books
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,7 +15,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.bookverse.R
 import com.example.bookverse.databinding.ActivityAddBookBinding
-import com.example.bookverse.model.Books
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -138,7 +138,6 @@ class AddBookActivity : AppCompatActivity() {
         val penulis = binding.etPenulis.text.toString()
         val genre = binding.listGenre.selectedItem.toString()
         val tahunTerbit = binding.etTahunTerbit.text.toString().toIntOrNull()
-
         val bookData = Books(
             id = bookId,
             judul = judul,
@@ -148,7 +147,6 @@ class AddBookActivity : AppCompatActivity() {
             cover = imageUrl,
             tahun_terbit = tahunTerbit
         )
-
         databaseReference.child(bookId).setValue(bookData)
             .addOnSuccessListener {
                 Toast.makeText(this, "berhasil edit buku", Toast.LENGTH_SHORT).show()
@@ -166,7 +164,6 @@ class AddBookActivity : AppCompatActivity() {
     }
 
     private fun uploadImage(uri: Uri){
-//        storageReference.putFile()
         val fileName = System.currentTimeMillis().toString() + ".jpg"
         val fireReference = storageReference.child(fileName)
         fireReference.putFile(uri)
@@ -188,9 +185,7 @@ class AddBookActivity : AppCompatActivity() {
         val penulis = binding.etPenulis.text.toString()
         val genre = binding.listGenre.selectedItem.toString()
         val tahunTerbit = binding.etTahunTerbit.text.toString().toIntOrNull()
-
         val bookId = databaseReference.push().key
-
         val bookData = Books(
             id = bookId,
             judul = judul,
@@ -198,9 +193,9 @@ class AddBookActivity : AppCompatActivity() {
             penulis = penulis,
             genre = genre,
             cover = imageUrl,
-            tahun_terbit = tahunTerbit
+            tahun_terbit = tahunTerbit,
+            createDate = System.currentTimeMillis()
         )
-
         bookId?.let {
             databaseReference.child(it).setValue(bookData)
                 .addOnSuccessListener {

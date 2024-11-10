@@ -1,9 +1,15 @@
 package com.example.bookverse.user
 
+import android.app.Dialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
+import com.example.bookverse.R
 import com.example.bookverse.databinding.ActivityDetailBookBinding
 
 class DetailBookActivity : AppCompatActivity() {
@@ -38,5 +44,14 @@ class DetailBookActivity : AppCompatActivity() {
         binding.tvTahunTerbit.text = tahunTerbit
         binding.tvPenulis.text = penulis
 
+        val dialogSuccess = Dialog(this)
+        dialogSuccess.setContentView(R.layout.success_alert)
+        dialogSuccess.window?.setBackgroundDrawable(getDrawable(R.drawable.notif_card))
+        dialogSuccess.setCancelable(true)
+//        dialogSuccess.window.setBackgroundDrawable(getDrawable(R.drawable))
+
+        binding.btnPinjambuku.setOnClickListener {
+            dialogSuccess.show()
+        }
     }
 }
