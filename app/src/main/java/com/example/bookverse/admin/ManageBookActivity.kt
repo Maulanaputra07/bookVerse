@@ -45,7 +45,6 @@ class ManageBookActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-
         binding.listBook.layoutManager = LinearLayoutManager(this)
         binding.listBook.adapter = AdapterBuku(bookList)
 

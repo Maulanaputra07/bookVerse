@@ -24,9 +24,9 @@ import kotlin.math.sin
 class AddBookActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddBookBinding
     private lateinit var firebaseDatabase: FirebaseDatabase
+    private lateinit var databaseReference: DatabaseReference
     private lateinit var firebaseStorage: FirebaseStorage
     private lateinit var storageReference: StorageReference
-    private lateinit var databaseReference: DatabaseReference
 
     private var imageUri: Uri? = null
 

@@ -19,16 +19,22 @@ import com.google.firebase.database.ValueEventListener
 
 class MainActivityAdmin : AppCompatActivity() {
     private lateinit var binding: ActivityMainAdminBinding
-    private lateinit var databaseReference: DatabaseReference
+    private lateinit var databaseReferenceBook: DatabaseReference
+    private lateinit var databaseReferenceGenre: DatabaseReference
+    private lateinit var databaseReferenceUser: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainAdminBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-        databaseReference = FirebaseDatabase.getInstance().getReference("books")
+        databaseReferenceBook = FirebaseDatabase.getInstance().getReference("books")
+        databaseReferenceGenre = FirebaseDatabase.getInstance().getReference("genres")
+        databaseReferenceUser = FirebaseDatabase.getInstance().getReference("users")
 
         fetchBooksCount()
+        fetchGenreCount()
+        fetchUserCount()
 
         binding.btnLogout.setOnClickListener {
             logout()
@@ -39,14 +45,44 @@ class MainActivityAdmin : AppCompatActivity() {
         binding.layoutBuku.setOnClickListener {
             startActivity(Intent(this, ManageBookActivity::class.java))
         }
+
+        binding.layoutGenre.setOnClickListener {
+            startActivity(Intent(this, ManageGenreActivity::class.java))
+        }
     }
 
     private fun fetchBooksCount(){
-        databaseReference.addValueEventListener(object : ValueEventListener{
+        databaseReferenceBook.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val bookCount = snapshot.childrenCount
                 Log.d("total buku", bookCount.toString())
                 binding.totalBuku.text = bookCount.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@MainActivityAdmin, "Gagal memuat data", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun fetchGenreCount(){
+        databaseReferenceGenre.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val genreCount = snapshot.childrenCount
+                binding.totalGenre.text = genreCount.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@MainActivityAdmin, "Gagal memuat data", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun fetchUserCount(){
+        databaseReferenceUser.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userCount = snapshot.childrenCount
+                binding.totalUser.text = userCount.toString()
             }
 
             override fun onCancelled(error: DatabaseError) {

@@ -48,7 +48,6 @@ class DetailBookActivity : AppCompatActivity() {
         dialogSuccess.setContentView(R.layout.success_alert)
         dialogSuccess.window?.setBackgroundDrawable(getDrawable(R.drawable.notif_card))
         dialogSuccess.setCancelable(true)
-//        dialogSuccess.window.setBackgroundDrawable(getDrawable(R.drawable))
 
         binding.btnPinjambuku.setOnClickListener {
             dialogSuccess.show()
