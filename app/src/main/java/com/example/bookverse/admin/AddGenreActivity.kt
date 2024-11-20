@@ -1,6 +1,7 @@
 package com.example.bookverse.admin
 
 import Genre
+import android.app.Dialog
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -16,6 +17,7 @@ class AddGenreActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddGenreBinding
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var dialogLoading: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +26,11 @@ class AddGenreActivity : AppCompatActivity() {
         databaseReference = firebaseDatabase.reference.child("genres")
 
         setContentView(binding.root)
+        dialogLoading = Dialog(this)
+        dialogLoading.window?.setBackgroundDrawable(getDrawable(R.drawable.notif_card))
+        dialogLoading.setCancelable(true)
 
         val status = intent.getStringExtra("status")
-
-
         val genreId = intent.getStringExtra("genreId")
         val genreTitle = intent.getStringExtra("Judul")
 
@@ -47,6 +50,8 @@ class AddGenreActivity : AppCompatActivity() {
     }
 
     private fun SaveGenreData(){
+        dialogLoading.setContentView(R.layout.loading_alert)
+        dialogLoading.show()
         val judul = binding.etJudul.text.toString()
         val genreId = databaseReference.push().key
         val bookData = Genre(
@@ -56,6 +61,7 @@ class AddGenreActivity : AppCompatActivity() {
         genreId?.let {
             databaseReference.child(it).setValue(bookData)
                 .addOnSuccessListener {
+                    dialogLoading.hide()
                     Toast.makeText(this, "Berhasil menambahkan genre", Toast.LENGTH_SHORT).show()
                     finish()
                 }
@@ -66,6 +72,8 @@ class AddGenreActivity : AppCompatActivity() {
     }
 
     private fun UpdateGenreData(genreId: String){
+        dialogLoading.setContentView(R.layout.loading_alert)
+        dialogLoading.show()
         val judul = binding.etJudul.text.toString()
         val genreData = Genre(
             id = genreId,
@@ -73,6 +81,7 @@ class AddGenreActivity : AppCompatActivity() {
         )
         databaseReference.child(genreId).setValue(genreData)
             .addOnSuccessListener {
+                dialogLoading.hide()
                 Toast.makeText(this, "berhasil edit genre", Toast.LENGTH_SHORT).show()
                 finish()
             }

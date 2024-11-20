@@ -33,8 +33,6 @@ class ManageGenreActivity : AppCompatActivity() {
     private lateinit var databaseReference: DatabaseReference
     private lateinit var genreList: MutableList<Genre>
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityManageGenreBinding.inflate(layoutInflater)

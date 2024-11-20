@@ -112,6 +112,7 @@ class ManageBookActivity : AppCompatActivity() {
 
                         val intent = Intent(viewItem.context, AddBookActivity::class.java)
                         intent.putExtra("BookId", bookEdit.id)
+                        Log.d("debugIdbuku", bookEdit.id?:"null")
                         intent.putExtra("Judul", bookEdit.judul)
                         intent.putExtra("sinopsis", bookEdit.sinopsis)
                         intent.putExtra("genre", bookEdit.genre)

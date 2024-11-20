@@ -1,15 +1,22 @@
 package com.example.bookverse.admin
 
 import Books
+import android.app.Dialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
@@ -27,6 +34,7 @@ class AddBookActivity : AppCompatActivity() {
     private lateinit var databaseReference: DatabaseReference
     private lateinit var firebaseStorage: FirebaseStorage
     private lateinit var storageReference: StorageReference
+    private lateinit var dialogLoading: Dialog
 
     private var imageUri: Uri? = null
 
@@ -40,7 +48,12 @@ class AddBookActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        val bookId = intent.getStringExtra("bookId")
+
+        dialogLoading = Dialog(this)
+        dialogLoading.window?.setBackgroundDrawable(getDrawable(R.drawable.notif_card))
+        dialogLoading.setCancelable(true)
+
+        val bookId = intent.getStringExtra("BookId")
         val bookTitle = intent.getStringExtra("Judul")
         val sinopsis = intent.getStringExtra("sinopsis")
         val genre = intent.getStringExtra("genre")
@@ -96,25 +109,29 @@ class AddBookActivity : AppCompatActivity() {
         }
 
         binding.btnSave.setOnClickListener {
-            if(status != "Edit buku"){
-                if (imageUri != null) {
-                    uploadImage(imageUri!!)
-                } else {
-                    Toast.makeText(this, "Pilih gambar terlebih dahulu", Toast.LENGTH_SHORT).show()
-                }
-            }else{
+            if(status == "Edit buku"){
+            Log.d("statuss", status.toString())
                 if(bookId != null){
+                    Log.d("idBuku", bookId.toString())
                     if(imageUri != null){
                         updateImage(imageUri!!, bookId)
                     }else{
                         UpdateBookData(bookId, bookCover.toString())
                     }
                 }
+            }else{
+                if (imageUri != null) {
+                    uploadImage(imageUri!!)
+                } else {
+                    Toast.makeText(this, "Pilih gambar terlebih dahulu", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     private fun updateImage(uri: Uri, bookId: String){
+        dialogLoading.setContentView(R.layout.loading_alert)
+        dialogLoading.show()
         val fileName = System.currentTimeMillis().toString() + ".jpg"
         val fireReference = storageReference.child(fileName)
         fireReference.putFile(uri)
@@ -149,6 +166,7 @@ class AddBookActivity : AppCompatActivity() {
         )
         databaseReference.child(bookId).setValue(bookData)
             .addOnSuccessListener {
+                dialogLoading.hide()
                 Toast.makeText(this, "berhasil edit buku", Toast.LENGTH_SHORT).show()
                 finish()
             }
@@ -164,8 +182,12 @@ class AddBookActivity : AppCompatActivity() {
     }
 
     private fun uploadImage(uri: Uri){
+        dialogLoading.setContentView(R.layout.loading_alert)
+        dialogLoading.show()
         val fileName = System.currentTimeMillis().toString() + ".jpg"
         val fireReference = storageReference.child(fileName)
+
+
         fireReference.putFile(uri)
             .addOnSuccessListener { taskSnapshot ->
                 taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { uri ->
@@ -175,6 +197,8 @@ class AddBookActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener { exception ->
+                dialogLoading.setContentView(R.layout.failed_alert)
+                dialogLoading.show()
                 Toast.makeText(this, "gagal upload errorl: " + exception.message, Toast.LENGTH_SHORT).show()
             }
     }
@@ -199,10 +223,12 @@ class AddBookActivity : AppCompatActivity() {
         bookId?.let {
             databaseReference.child(it).setValue(bookData)
                 .addOnSuccessListener {
+                    dialogLoading.hide()
                     Toast.makeText(this, "Berhasil menambahkan buku", Toast.LENGTH_SHORT).show()
                     finish()
                 }
                 .addOnFailureListener {
+                    dialogLoading.hide()
                     Toast.makeText(this, "Gagal menambahkan buku", Toast.LENGTH_SHORT).show()
                 }
         }

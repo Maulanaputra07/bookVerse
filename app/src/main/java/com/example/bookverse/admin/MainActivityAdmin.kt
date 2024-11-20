@@ -49,6 +49,10 @@ class MainActivityAdmin : AppCompatActivity() {
         binding.layoutGenre.setOnClickListener {
             startActivity(Intent(this, ManageGenreActivity::class.java))
         }
+
+        binding.layoutUser.setOnClickListener {
+            startActivity(Intent(this, ManageUsersActivity::class.java))
+        }
     }
 
     private fun fetchBooksCount(){
