@@ -125,7 +125,6 @@ class ManageBookActivity : AppCompatActivity() {
                     }
                 }
 
-
                 btnDelete.setOnClickListener {
                     val position = adapterPosition
 
