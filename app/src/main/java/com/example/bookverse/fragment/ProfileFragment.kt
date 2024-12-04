@@ -2,6 +2,7 @@ package com.example.bookverse.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.bookverse.LoginActivity
 import com.example.bookverse.R
 import com.example.bookverse.databinding.FragmentProfileBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,6 +41,11 @@ class ProfileFragment : Fragment() {
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        firebaseDatabase = FirebaseDatabase.getInstance()
+        databaseReference = firebaseDatabase.reference.child("borrowbooks")
+
+        loadedBorrowData()
 
         val sharedPreferences = activity?.getSharedPreferences("userSession", AppCompatActivity.MODE_PRIVATE)
         val username = sharedPreferences?.getString("username", "Guest")
@@ -70,6 +79,25 @@ class ProfileFragment : Fragment() {
             editor?.apply()
     }
 
+    private fun loadedBorrowData(){
+        val sharedPreferences = activity?.getSharedPreferences("userSession", AppCompatActivity.MODE_PRIVATE)
+
+        val id = sharedPreferences?.getString("id", "")
+        Log.d("alamak", id.toString())
+
+        databaseReference.orderByChild("id_user").equalTo(id).addListenerForSingleValueEvent(object :
+            ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val count = snapshot.childrenCount
+                binding.txtCurrentBook.text = count.toString()
+                Log.d("BorrowDataCount", "Jumlah data di borrowbooks: $count")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("BorrowDataCount", "Gagal mendapatkan data: ${error.message}")
+            }
+        })
+    }
 
 
 

@@ -57,6 +57,8 @@ class HomeFragment : Fragment() {
 
         val sharedPreferences = activity?.getSharedPreferences("userSession", AppCompatActivity.MODE_PRIVATE)
         val username = sharedPreferences?.getString("username", "Guest")
+        val id = sharedPreferences?.getString("id", null)
+        Log.d("cihuyy", id.toString())
         binding.textUsername.text = username
 
         binding.greetingTime.text = GreetingTime()

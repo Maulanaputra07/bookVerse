@@ -2,6 +2,7 @@ package com.example.bookverse
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bookverse.admin.MainActivityAdmin
@@ -54,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
                         val userData = userSnapshot.getValue(UserData::class.java)
 
                         if(userData != null && userData.password == password){
-                            saveLoginStatus(userData.username.toString(), userData.role.toString(), userData.name.toString(), userData.email.toString())
+                            saveLoginStatus(userData.id.toString() ,userData.username.toString(), userData.role.toString(), userData.name.toString(), userData.email.toString())
                             checkLoginStatus()
                             return
                         }
@@ -69,9 +70,10 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    private fun saveLoginStatus(username: String, role: String, name: String, email:String) {
+    private fun saveLoginStatus(id: String, username: String, role: String, name: String, email:String) {
         val sharedPref = getSharedPreferences("userSession", MODE_PRIVATE)
         val editor = sharedPref.edit()
+        editor.putString("id", id)
         editor.putString("username", username)
         editor.putString("role", role)
         editor.putString("name", name)

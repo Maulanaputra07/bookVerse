@@ -145,7 +145,7 @@ class SeeAllActivity : AppCompatActivity() {
 
     private fun openDetailBookActivity(book: Books) {
         val intent = Intent(this, DetailBookActivity::class.java).apply {
-            putExtra("bookId", book.id)
+            putExtra("bookId", book.id.toString())
             putExtra("title", book.judul.toString())
             putExtra("penulis", book.penulis.toString())
             putExtra("tahunTerbit", book.tahun_terbit.toString())

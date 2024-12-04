@@ -1,12 +1,15 @@
 package com.example.bookverse.admin
 
 import Books
+import android.app.AlarmManager
 import android.app.Dialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,14 +17,20 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.example.bookverse.Notification
 import com.example.bookverse.R
+import com.example.bookverse.channelID
 import com.example.bookverse.databinding.ActivityAddBookBinding
+import com.example.bookverse.messageExtra
+import com.example.bookverse.notificationId
+import com.example.bookverse.titleExtra
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -47,6 +56,8 @@ class AddBookActivity : AppCompatActivity() {
         databaseReference = firebaseDatabase.reference.child("books")
 
         setContentView(binding.root)
+
+//        createNotificationChannel()
 
 
         dialogLoading = Dialog(this)
@@ -226,12 +237,46 @@ class AddBookActivity : AppCompatActivity() {
                     dialogLoading.hide()
                     Toast.makeText(this, "Berhasil menambahkan buku", Toast.LENGTH_SHORT).show()
                     finish()
+                    scheduleNotification()
                 }
                 .addOnFailureListener {
                     dialogLoading.hide()
                     Toast.makeText(this, "Gagal menambahkan buku", Toast.LENGTH_SHORT).show()
                 }
         }
+    }
+
+    private fun scheduleNotification() {
+        val intent = Intent(applicationContext, Notification::class.java)
+        val title = "aaaa"
+        val message = "upupup"
+        intent.putExtra(titleExtra, title)
+        intent.putExtra(messageExtra, message)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            notificationId,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//        val time = getTime()
+    }
+
+//    private fun getTime(): Long {
+//        val minute =
+//    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel() {
+        val name = "notif channel"
+        val desc = "cihuyy"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(channelID, name, importance)
+        channel.description = desc
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
